@@ -84,7 +84,12 @@
         function validateForm() {
             let isValid = true;
             letterInputs.forEach(input => {
-                if (input.style.backgroundColor !== 'green' && input.style.backgroundColor !== 'yellow' && input.style.backgroundColor !== 'darkgrey') {
+                if (
+                    input.style.backgroundColor !== 'green' &&
+                    input.style.backgroundColor !== 'yellow' &&
+                    input.style.backgroundColor !== 'darkgrey' &&
+                    input.style.backgroundColor !== ''
+                ) {
                     isValid = false;
                 }
             });
