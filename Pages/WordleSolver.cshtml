@@ -28,11 +28,18 @@
         <div class="wordle-row">
             @for (int j = 0; j < 5; j++)
             {
-                string inputValue = TempData[$"word-{i}-letter-{j}"]?.ToString();
-                string inputColor = TempData[$"word-{i}-letter-{j}-color"]?.ToString();
+                string inputValue = TempData[$"word-{i}-letter-{j}"]?.ToString().Trim();
+                string inputColor = TempData[$"word-{i}-letter-{j}-color"]?.ToString().Trim();
 
-                <input type="text" class="letter-input" maxlength="1" name=@($"word-{i}-letter-{j}") @(string.IsNullOrEmpty(inputValue) ? null : $"value={inputValue}") @(string.IsNullOrEmpty(inputColor) ? null : $"style=background-color:{inputColor}") />
-                <input type="hidden" name=@($"word-{i}-letter-{j}-color") value=@(inputColor) />
+                <input type="text" class="letter-input" maxlength="1"
+                    name="@($"word-{i}-letter-{j}")"
+                    value="@(string.IsNullOrEmpty(inputValue) ? "" : inputValue)"
+                    style="@(string.IsNullOrEmpty(inputColor) ? "" : $"background-color:{inputColor}")"
+                    />
+                <input type="hidden" 
+                    name="@($"word-{i}-letter-{j}-color")"
+                    value="@(inputColor)"
+                    />
             }
         </div>
     }
