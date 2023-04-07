@@ -39,6 +39,19 @@
         </div>
     }
     <button type="submit" class="btn btn-primary">Submit</button>
+
+
+    <!-- Add this section to display the top 10 likely words -->
+    @if (Model.Top10LikelyWords != null && Model.Top10LikelyWords.Count > 0)
+    {
+        <h2>Top 10 Likely Words:</h2>
+        <ul>
+            @foreach (var word in Model.Top10LikelyWords)
+            {
+                <li>@word</li>
+            }
+        </ul>
+    }
 </form>
 
 @section Scripts {

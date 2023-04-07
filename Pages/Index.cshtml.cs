@@ -16,8 +16,16 @@ namespace WordleSolver.Pages
 
     public class IndexModel : PageModel
     {
+        private readonly WordDictionaryService _wordDictionaryService;
+        public IndexModel(WordDictionaryService wordDictionaryService)
+        {
+            _wordDictionaryService = wordDictionaryService;
+        }
+
+
         [BindProperty]
         public List<Word> Words { get; set; } = new List<Word>();
+        public List<string> Top10LikelyWords { get; set; }
 
         public void OnPost()
         {
@@ -41,8 +49,76 @@ namespace WordleSolver.Pages
 
                     word.Letters.Add(new Letter { Character = letterChar, Color = letterColor });
                 }
-                Words.Add(word);
+                string wordString = new string(word.Letters.Select(l => l.Character).ToArray()).Trim();
+
+                if (!string.IsNullOrEmpty(wordString))
+                {
+                    Words.Add(word);
+                }
             }
+
+            foreach (Word word in Words)
+            {
+                string wordString = new string(word.Letters.Select(l => l.Character).ToArray());
+                bool wordExists = _wordDictionaryService.WordsHashSet.Contains(wordString);
+            }
+
+            Top10LikelyWords = GetTop10LikelyWords(Words);
+        }
+
+        public List<string> GetTop10LikelyWords(List<Word> words)
+        {
+            var possibleWords = _wordDictionaryService.WordsHashSet.ToList();
+
+            foreach (var word in words)
+            {
+                for (int i = possibleWords.Count - 1; i >= 0; i--)
+                {
+                    var possibleWord = possibleWords[i];
+                    bool isMatch = true;
+
+                    for (int j = 0; j < 5; j++)
+                    {
+                        var letter = word.Letters[j];
+                        char possibleLetter = possibleWord[j];
+
+                        if (letter.Color == "green" && letter.Character != possibleLetter)
+                        {
+                            isMatch = false;
+                            break;
+                        }
+                        else if (letter.Color == "yellow" && !word.Letters.Any(l => l.Character == possibleLetter))
+                        {
+                            isMatch = false;
+                            break;
+                        }
+                        else if (letter.Color == "darkgrey" && word.Letters.Any(l => l.Character == possibleLetter))
+                        {
+                            isMatch = false;
+                            break;
+                        }
+                    }
+
+                    if (!isMatch)
+                    {
+                        possibleWords.RemoveAt(i);
+                    }
+                }
+            }
+
+            // Group the words by the number of common letters and order by the count in descending order
+            var groupedWords = possibleWords.GroupBy(x => x)
+                                             .Select(group => new
+                                             {
+                                                 Word = group.Key,
+                                                 Count = group.Count()
+                                             })
+                                             .OrderByDescending(x => x.Count)
+                                             .Take(10)
+                                             .Select(x => x.Word)
+                                             .ToList();
+
+            return groupedWords;
         }
     }
 }
