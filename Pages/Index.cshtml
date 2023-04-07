@@ -54,14 +54,15 @@
         // Add a click event listener to each letter-input
         letterInputs.forEach(input => {
             input.addEventListener('click', () => {
-                // Cycle through background colors: green -> yellow -> dark grey -> green
-                if (input.style.backgroundColor === 'green') {
-                    input.style.backgroundColor = 'yellow';
-                } else if (input.style.backgroundColor === 'yellow') {
-                    input.style.backgroundColor = 'darkgrey';
-                } else {
+
+                if (input.style.backgroundColor === 'darkgrey') {
                     input.style.backgroundColor = 'green';
+                } else if (input.style.backgroundColor === 'green') {
+                    input.style.backgroundColor = 'yellow';
+                } else {
+                    input.style.backgroundColor = 'darkgrey';
                 }
+
 
                 // Update the corresponding hidden input with the color value
                 input.nextElementSibling.value = input.style.backgroundColor;
@@ -74,6 +75,15 @@
                 // Automatically advance to the next input box
                 if (index < letterInputs.length - 1) {
                     letterInputs[index + 1].focus();
+                }
+            });
+
+            // Set the input color to dark grey when it gets focus for the first time
+            input.addEventListener('focus', () => {
+                if (!input.dataset.focused) {
+                    input.style.backgroundColor = 'darkgrey';
+                    input.nextElementSibling.value = input.style.backgroundColor;
+                    input.dataset.focused = 'true';
                 }
             });
         });
