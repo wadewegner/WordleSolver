@@ -17,6 +17,9 @@ namespace WordleSolver.Pages
 
         public void OnPost()
         {
+            // Clear the words list before adding new words
+            Words.Clear();
+
             // Collect the data from the form into a list of six words
             for (int i = 0; i < 6; i++)
             {

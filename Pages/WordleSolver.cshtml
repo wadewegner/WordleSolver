@@ -28,7 +28,7 @@
         <div class="wordle-row">
             @for (int j = 0; j < 5; j++)
             {
-                <input type="text" class="letter-input" maxlength="1" />
+                <input type="text" class="letter-input" maxlength="1" name=@($"word-{i}-letter-{j}") />
             }
         </div>
     }
@@ -41,6 +41,16 @@
     <div class="result-message">
     @Model.ResultMessage
 </div>
+}
+
+@if (Model.Words != null && Model.Words.Count > 0)
+{
+    <ul>
+        @foreach (var word in Model.Words)
+        {
+            <li>@word</li>
+        }
+    </ul>
 }
 
 @section Scripts {
