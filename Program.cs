@@ -2,7 +2,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddScoped<WordDictionaryService>();
+builder.Services.AddScoped<WordleSolver.Services.WordDictionaryService>();
 
 var app = builder.Build();
 

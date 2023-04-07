@@ -1,65 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using WordleSolver.Services;
 using WordleSolver.Models;
 
-namespace WordleSolver.Pages
+namespace WordleSolver.Services
 {
-
-    public class IndexModel : PageModel
+    public class WordleSolver
     {
-        private readonly WordDictionaryService _wordDictionaryService;
-        public IndexModel(WordDictionaryService wordDictionaryService)
+        private IDictionary<int, char> GreenLetters;
+        private IDictionary<int, char> YellowLetters;
+        private IList<char> DarkgreyLetters;
+        private WordDictionaryService _wordDictionaryService;
+
+        public WordleSolver(WordDictionaryService wordDictionaryService)
         {
             _wordDictionaryService = wordDictionaryService;
-        }
-
-
-        [BindProperty]
-        public List<Word> Words { get; set; } = new List<Word>();
-        public List<string> Top10LikelyWords { get; set; }
-
-        public Dictionary<int, char> GreenLetters { get; set; }
-        public Dictionary<int, char> YellowLetters { get; set; }
-        public List<char> DarkgreyLetters { get; set; }
-
-        public void OnPost()
-        {
-            // Clear the words list before adding new words
-            Words.Clear();
-
-            // Collect the data from the form into a list of six words
-            for (int i = 0; i < 6; i++)
-            {
-                Word word = new Word();
-                for (int j = 0; j < 5; j++)
-                {
-                    // Use Request.Form to get the value of each input by its name attribute
-                    string inputValue = Request.Form[$"word-{i}-letter-{j}"].ToString().Trim();
-                    char letterChar = !string.IsNullOrEmpty(inputValue) ? inputValue[0] : ' ';
-                    string letterColor = Request.Form[$"word-{i}-letter-{j}-color"].ToString().Trim();
-
-                    // Save the input values and colors to TempData
-                    TempData[$"word-{i}-letter-{j}"] = letterChar;
-                    TempData[$"word-{i}-letter-{j}-color"] = letterColor;
-
-                    word.Letters.Add(new Letter { Character = letterChar, Color = letterColor });
-                }
-                string wordString = new string(word.Letters.Select(l => l.Character).ToArray()).Trim();
-
-                if (!string.IsNullOrEmpty(wordString))
-                {
-                    Words.Add(word);
-                }
-            }
-
-            foreach (Word word in Words)
-            {
-                string wordString = new string(word.Letters.Select(l => l.Character).ToArray());
-                bool wordExists = _wordDictionaryService.WordsHashSet.Contains(wordString);
-            }
-
-            Top10LikelyWords = GetTop10LikelyWords(Words);
         }
 
         public List<string> GetTop10LikelyWords(List<Word> words)
@@ -75,12 +27,8 @@ namespace WordleSolver.Pages
             // Iterate through the input words and populate the dictionaries
             for (int i = 0; i < words.Count; i++)
             {
-
-
                 for (int j = 0; j < words[i].Letters.Count; j++)
                 {
-
-
                     char character = words[i].Letters[j].Character;
                     string color = words[i].Letters[j].Color;
 
@@ -99,7 +47,7 @@ namespace WordleSolver.Pages
                 }
             }
 
-            // Filter the possible words based on the green letters
+            // Filter the possible words based on the green letters, yellow letters, and excluding darkgrey letters
             possibleWords = possibleWords.Where(word =>
             {
                 foreach (var greenLetter in GreenLetters)
@@ -165,10 +113,8 @@ namespace WordleSolver.Pages
                 return (double)sumFrequency / word.Length;
             }).ToList();
 
-
             // Return the top 10 most likely words
-            return possibleWords.ToList();
+            return possibleWords.Take(10).ToList();
         }
-
     }
 }

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
 
+namespace WordleSolver.Services
+{
 public class WordDictionaryService
 {
     public HashSet<string> WordsHashSet { get; private set; }
@@ -32,4 +34,5 @@ public class WordDictionaryService
 
         return wordsHashSet;
     }
+}
 }
