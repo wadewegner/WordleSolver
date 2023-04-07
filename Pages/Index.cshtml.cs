@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Collections.Generic;
 
 namespace WordleSolver.Pages
 {
-   public class Letter
-{
-    public char Character { get; set; }
-    public string Color { get; set; } = "green";
-}
+    public class Letter
+    {
+        public char Character { get; set; }
+        public string Color { get; set; } = "green";
+    }
 
     public class Word
     {
@@ -19,12 +18,6 @@ namespace WordleSolver.Pages
     {
         [BindProperty]
         public List<Word> Words { get; set; } = new List<Word>();
-
-        public string ResultMessage { get; set; }
-
-        public void OnGet()
-        {
-        }
 
         public void OnPost()
         {
@@ -51,5 +44,5 @@ namespace WordleSolver.Pages
                 Words.Add(word);
             }
         }
-   }
+    }
 }
