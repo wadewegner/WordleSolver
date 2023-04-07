@@ -1,0 +1,65 @@
+@page
+@model WordleSolver.Pages.WordleSolverModel
+@{
+    ViewData["Title"] = "Wordle Solver";
+}
+
+<style>
+    .wordle-row {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.letter-input {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+}
+</style>
+
+
+<h1>Wordle Solver</h1>
+
+<form method="post" id="wordleForm">
+    @for (int i = 0; i < 6; i++)
+    {
+        <div class="wordle-row">
+            @for (int j = 0; j < 5; j++)
+            {
+                <input type="text" class="letter-input" maxlength="1" />
+            }
+        </div>
+    }
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
+@if (!string.IsNullOrEmpty(Model.ResultMessage))
+{
+    <div class="result-message">
+    @Model.ResultMessage
+</div>
+}
+
+@section Scripts {
+    <script>
+        // Get all the letter-input elements
+        const letterInputs = document.querySelectorAll('.letter-input');
+
+        // Add a click event listener to each letter-input
+        letterInputs.forEach(input => {
+            input.addEventListener('click', () => {
+                // Cycle through background colors: green -> yellow -> dark grey -> green
+                if (input.style.backgroundColor === 'green') {
+                    input.style.backgroundColor = 'yellow';
+                } else if (input.style.backgroundColor === 'yellow') {
+                    input.style.backgroundColor = 'darkgrey';
+                } else {
+                    input.style.backgroundColor = 'green';
+                }
+            });
+        });
+    </script>
+}
