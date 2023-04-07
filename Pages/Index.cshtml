@@ -1,10 +1,96 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Wordle Solver";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<style>
+    .wordle-row {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.letter-input {
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+}
+</style>
+
+
+<h1>Wordle Solver</h1>
+
+<form method="post" id="wordleForm" onsubmit="return validateForm();">
+    @for (int i = 0; i < 6; i++)
+    {
+        <div class="wordle-row">
+            @for (int j = 0; j < 5; j++)
+            {
+                string inputValue = TempData[$"word-{i}-letter-{j}"]?.ToString().Trim();
+                string inputColor = TempData[$"word-{i}-letter-{j}-color"]?.ToString().Trim();
+
+                <input type="text" class="letter-input" maxlength="1"
+                    name="@($"word-{i}-letter-{j}")"
+                    value="@(string.IsNullOrEmpty(inputValue) ? "" : inputValue)"
+                    style="@(string.IsNullOrEmpty(inputColor) ? "" : $"background-color:{inputColor}")"
+                    />
+                <input type="hidden" 
+                    name="@($"word-{i}-letter-{j}-color")"
+                    value="@(inputColor)"
+                    />
+            }
+        </div>
+    }
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+@section Scripts {
+    <script>
+        // Get all the letter-input elements
+        const letterInputs = document.querySelectorAll('.letter-input');
+
+        // Add a click event listener to each letter-input
+        letterInputs.forEach(input => {
+            input.addEventListener('click', () => {
+                // Cycle through background colors: green -> yellow -> dark grey -> green
+                if (input.style.backgroundColor === 'green') {
+                    input.style.backgroundColor = 'yellow';
+                } else if (input.style.backgroundColor === 'yellow') {
+                    input.style.backgroundColor = 'darkgrey';
+                } else {
+                    input.style.backgroundColor = 'green';
+                }
+
+                // Update the corresponding hidden input with the color value
+                input.nextElementSibling.value = input.style.backgroundColor;
+            });
+        });
+
+        // Add an input event listener to each letter-input
+        letterInputs.forEach((input, index) => {
+            input.addEventListener('input', () => {
+                // Automatically advance to the next input box
+                if (index < letterInputs.length - 1) {
+                    letterInputs[index + 1].focus();
+                }
+            });
+        });
+
+        function validateForm() {
+            let isValid = true;
+            letterInputs.forEach(input => {
+                if (
+                    input.style.backgroundColor !== 'green' &&
+                    input.style.backgroundColor !== 'yellow' &&
+                    input.style.backgroundColor !== 'darkgrey' &&
+                    input.style.backgroundColor !== ''
+                ) {
+                    isValid = false;
+                }
+            });
+            return isValid;
+        }
+    </script>
+}
