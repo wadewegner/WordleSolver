@@ -22,13 +22,14 @@
 
 <h1>Wordle Solver</h1>
 
-<form method="post" id="wordleForm">
+<form method="post" id="wordleForm" onsubmit="return validateForm();">
     @for (int i = 0; i < 6; i++)
     {
         <div class="wordle-row">
             @for (int j = 0; j < 5; j++)
             {
                 <input type="text" class="letter-input" maxlength="1" name=@($"word-{i}-letter-{j}") />
+                <input type="hidden" name=@($"word-{i}-letter-{j}-color") />
             }
         </div>
     }
@@ -48,7 +49,12 @@
     <ul>
         @foreach (var word in Model.Words)
         {
-            <li>@word</li>
+            <li>
+                @foreach (var letter in word.Letters)
+                {
+                    <span style="color: @letter.Color">@letter.Character</span>
+                }
+            </li>
         }
     </ul>
 }
@@ -69,7 +75,20 @@
                 } else {
                     input.style.backgroundColor = 'green';
                 }
+
+                // Update the corresponding hidden input with the color value
+                input.nextElementSibling.value = input.style.backgroundColor;
             });
         });
+
+        function validateForm() {
+            let isValid = true;
+            letterInputs.forEach(input => {
+                if (input.style.backgroundColor !== 'green' && input.style.backgroundColor !== 'yellow' && input.style.backgroundColor !== 'darkgrey') {
+                    isValid = false;
+                }
+            });
+            return isValid;
+        }
     </script>
 }
