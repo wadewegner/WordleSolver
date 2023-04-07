@@ -14,7 +14,6 @@ namespace WordleSolver.Pages
             _wordDictionaryService = wordDictionaryService;
         }
 
-
         [BindProperty]
         public List<Word> Words { get; set; } = new List<Word>();
         public List<string> Top10LikelyWords { get; set; }
