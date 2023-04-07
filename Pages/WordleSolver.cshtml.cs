@@ -46,9 +46,6 @@ namespace WordleSolver.Pages
                 }
                 Words.Add(word);
             }
-
-            // Prepare the result message
-            ResultMessage = "Words: " + string.Join(", ", Words);
         }
    }
 }

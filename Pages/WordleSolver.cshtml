@@ -36,14 +36,6 @@
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
-
-@if (!string.IsNullOrEmpty(Model.ResultMessage))
-{
-    <div class="result-message">
-    @Model.ResultMessage
-</div>
-}
-
 @if (Model.Words != null && Model.Words.Count > 0)
 {
     <ul>
