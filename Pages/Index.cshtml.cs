@@ -106,19 +106,38 @@ namespace WordleSolver.Pages
                 }
             }
 
-            // Group the words by the number of common letters and order by the count in descending order
-            var groupedWords = possibleWords.GroupBy(x => x)
-                                             .Select(group => new
-                                             {
-                                                 Word = group.Key,
-                                                 Count = group.Count()
-                                             })
-                                             .OrderByDescending(x => x.Count)
-                                             .Take(10)
-                                             .Select(x => x.Word)
-                                             .ToList();
+            // Calculate the frequency of each letter in the possible words
+            Dictionary<char, int> letterFrequency = new Dictionary<char, int>();
+            foreach (var word in possibleWords)
+            {
+                foreach (char letter in word)
+                {
+                    if (letterFrequency.ContainsKey(letter))
+                    {
+                        letterFrequency[letter]++;
+                    }
+                    else
+                    {
+                        letterFrequency[letter] = 1;
+                    }
+                }
+            }
 
-            return groupedWords;
+            // Order the possible words by the sum of their letter frequencies
+            var orderedWords = possibleWords.OrderByDescending(word =>
+            {
+                int frequencySum = 0;
+                foreach (char letter in word)
+                {
+                    frequencySum += letterFrequency[letter];
+                }
+                return frequencySum;
+            });
+
+            // Take the top 10 words
+            var top10Words = orderedWords.Take(10).ToList();
+
+            return top10Words;
         }
     }
 }
