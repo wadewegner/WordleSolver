@@ -42,6 +42,10 @@ namespace WordleSolver.Pages
                     char letterChar = !string.IsNullOrEmpty(inputValue) ? inputValue[0] : ' ';
                     string letterColor = Request.Form[$"word-{i}-letter-{j}-color"];
 
+                    // Save the input values and colors to TempData
+                    TempData[$"word-{i}-letter-{j}"] = letterChar;
+                    TempData[$"word-{i}-letter-{j}-color"] = letterColor;
+
                     word.Letters.Add(new Letter { Character = letterChar, Color = letterColor });
                 }
                 Words.Add(word);

@@ -28,8 +28,8 @@
         <div class="wordle-row">
             @for (int j = 0; j < 5; j++)
             {
-                <input type="text" class="letter-input" maxlength="1" name=@($"word-{i}-letter-{j}") />
-                <input type="hidden" name=@($"word-{i}-letter-{j}-color") />
+                <input type="text" class="letter-input" maxlength="1" name=@($"word-{i}-letter-{j}") value=@(TempData[$"word-{i}-letter-{j}"]?.ToString()) style="background-color: @((string)TempData[$"word-{i}-letter-{j}-color"]);" />
+                <input type="hidden" name=@($"word-{i}-letter-{j}-color") value=@(TempData[$"word-{i}-letter-{j}-color"]?.ToString()) />
             }
         </div>
     }
