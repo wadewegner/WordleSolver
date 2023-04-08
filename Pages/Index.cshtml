@@ -26,10 +26,7 @@
     }
     <button type="submit" class="btn btn-primary submit-button">Submit</button>
 
-
-
-
-    <!-- Display Green Letters -->
+    @* <!-- Display Green Letters -->
     @if (Model.GreenLetters != null)
     {
         <h2>Green Letters:</h2>
@@ -56,18 +53,17 @@
     }
 
     <!-- Display Darkgrey Letters -->
-@if (Model.DarkgreyLetters != null)
-{
-    <h2>Darkgrey Letters:</h2>
-    <ul>
-        @foreach (var darkgreyLetter in Model.DarkgreyLetters)
-        {
-            <li>Position: @darkgreyLetter.Key, Letters: @string.Join(", ", darkgreyLetter.Value)</li>
-        }
-    </ul>
-}
+    @if (Model.DarkgreyLetters != null)
+    {
+        <h2>Darkgrey Letters:</h2>
+        <ul>
+            @foreach (var darkgreyLetter in Model.DarkgreyLetters)
+            {
+                <li>Position: @darkgreyLetter.Key, Letters: @string.Join(", ", darkgreyLetter.Value)</li>
+            }
+        </ul>
+    } *@
 
-    
     <!-- Add this section to display the top 10 likely words -->
     @if (Model.Top10LikelyWords != null && Model.Top10LikelyWords.Count > 0)
     {
