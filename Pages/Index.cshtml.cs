@@ -128,53 +128,6 @@ namespace WordleSolver.Pages
                     }
                 }
 
-                // foreach (var darkgreyLetter in DarkgreyLetters)
-                // {
-                //     Console.WriteLine("dg: value/key: " + word[darkgreyLetter.Key] + " / " + darkgreyLetter.Key);
-                //     if (darkgreyLetter.Value.Contains(word[darkgreyLetter.Key]))
-                //     {
-                //         return false;
-                //     }
-                // }
-
-                /// this is really close
-                // foreach (var darkgreyLetter in DarkgreyLetters)
-                // {
-                //     // if (darkgreyLetter.Value.Contains(word[darkgreyLetter.Key]) && !GreenLetters.Values.Contains(word[darkgreyLetter.Key]))
-                //     // {
-                //     //     return false;
-                //     // }
-                //     foreach (var character in darkgreyLetter.Value)
-                //     {
-                //         // If the current character is in the word and not green in a different position, exclude the word
-                //         if (word.Contains(character) && !GreenLetters.Values.Contains(character))
-                //         {
-                //             return false;
-                //         }
-                //     }
-                // }
-
-                // foreach (var darkgreyLetter in DarkgreyLetters)
-                // {
-                //     foreach (var character in darkgreyLetter.Value)
-                //     {
-                //         // Check if the current character is in the word
-                //         if (word.Contains(character))
-                //         {
-                //             // Find all occurrences of the character in the word
-                //             var charIndexes = Enumerable.Range(0, word.Length).Where(i => word[i] == character).ToList();
-
-                //             // Check if all occurrences of the character are green
-                //             bool allOccurrencesGreen = charIndexes.All(i => GreenLetters.ContainsKey(i) && GreenLetters[i] == character);
-
-                //             // If not all occurrences are green, exclude the word
-                //             if (!allOccurrencesGreen)
-                //             {
-                //                 return false;
-                //             }
-                //         }
-                //     }
-                // }
                 foreach (var darkgreyLetter in DarkgreyLetters)
                 {
                     foreach (var character in darkgreyLetter.Value)
