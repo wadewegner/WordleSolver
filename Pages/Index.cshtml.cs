@@ -70,8 +70,6 @@ namespace WordleSolver.Pages
             YellowLetters = new Dictionary<int, char>();
             DarkgreyLetters = new Dictionary<int, List<char>>(); // Updated to store a list of characters
 
-            Console.WriteLine("----------");
-
             // Iterate through the input words and populate the dictionaries
             for (int i = 0; i < words.Count; i++)
             {
