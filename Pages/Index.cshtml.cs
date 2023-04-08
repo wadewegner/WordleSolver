@@ -33,7 +33,7 @@ namespace WordleSolver.Pages
                 for (int j = 0; j < 5; j++)
                 {
                     // Use Request.Form to get the value of each input by its name attribute
-                    string inputValue = Request.Form[$"word-{i}-letter-{j}"].ToString().Trim();
+                    string inputValue = Request.Form[$"word-{i}-letter-{j}"].ToString().Trim().ToLower();
                     char letterChar = !string.IsNullOrEmpty(inputValue) ? inputValue[0] : ' ';
                     string letterColor = Request.Form[$"word-{i}-letter-{j}-color"].ToString().Trim();
 
