@@ -56,16 +56,16 @@
     }
 
     <!-- Display Darkgrey Letters -->
-    @if (Model.DarkgreyLetters != null)
-    {
-        <h2>Darkgrey Letters:</h2>
-        <ul>
-            @foreach (var darkgreyLetter in Model.DarkgreyLetters)
-            {
-                <li>Position: @darkgreyLetter.Key, Letter: @darkgreyLetter.Value</li>
-            }
-        </ul>
-    }
+@if (Model.DarkgreyLetters != null)
+{
+    <h2>Darkgrey Letters:</h2>
+    <ul>
+        @foreach (var darkgreyLetter in Model.DarkgreyLetters)
+        {
+            <li>Position: @darkgreyLetter.Key, Letters: @string.Join(", ", darkgreyLetter.Value)</li>
+        }
+    </ul>
+}
 
     
     <!-- Add this section to display the top 10 likely words -->

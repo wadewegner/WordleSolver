@@ -19,7 +19,7 @@ namespace WordleSolver.Pages
 
         public Dictionary<int, char> GreenLetters { get; set; }
         public Dictionary<int, char> YellowLetters { get; set; }
-        public Dictionary<int, char> DarkgreyLetters { get; set; }
+        public Dictionary<int, List<char>> DarkgreyLetters { get; set; } // Updated to store a list of characters
 
         public void OnPost()
         {
@@ -68,7 +68,7 @@ namespace WordleSolver.Pages
             // Create dictionaries to store the known green, yellow, and darkgrey letters with their positions
             GreenLetters = new Dictionary<int, char>();
             YellowLetters = new Dictionary<int, char>();
-            DarkgreyLetters = new Dictionary<int, char>();
+            DarkgreyLetters = new Dictionary<int, List<char>>(); // Updated to store a list of characters
 
             Console.WriteLine("----------");
 
@@ -77,12 +77,8 @@ namespace WordleSolver.Pages
             {
                 for (int j = 0; j < words[i].Letters.Count; j++)
                 {
-
-
                     char character = words[i].Letters[j].Character;
                     string color = words[i].Letters[j].Color;
-
-                    Console.WriteLine("character/color/j: " + character + "/" + color + "/" + j);
 
                     if (color == "green")
                     {
@@ -94,7 +90,12 @@ namespace WordleSolver.Pages
                     }
                     else if (color == "darkgrey")
                     {
-                        DarkgreyLetters[j] = character;
+                        if (!DarkgreyLetters.ContainsKey(j))
+                        {
+                            DarkgreyLetters[j] = new List<char>();
+                        }
+
+                        DarkgreyLetters[j].Add(character); // Add the character to the list
                     }
                 }
             }
@@ -108,8 +109,6 @@ namespace WordleSolver.Pages
                     // check to see if the character at the specified position in the word does not match the value; if so, exclude it
                     if (word[greenLetter.Key] != greenLetter.Value)
                     {
-                        if (word == "eerie") Console.WriteLine("GREEN: word / key / value: " + word + " / " + greenLetter.Key + " / " + greenLetter.Value);
-
                         return false;
                     }
                 }
@@ -119,24 +118,84 @@ namespace WordleSolver.Pages
                     // check to see if the character is in the word; if not, exclude it
                     if (!word.Contains(yellowLetter.Value))
                     {
-                        if (word == "eerie") Console.WriteLine("YELLOW 1: word / key / value: " + word + " / " + yellowLetter.Key + " / " + yellowLetter.Value);
                         return false;
                     }
 
                     // check to see if this character is in this position; if so, exclude it
                     if (word[yellowLetter.Key] == yellowLetter.Value)
                     {
-                        if (word == "eerie") Console.WriteLine("YELLOW 2: word / key / value: " + word + " / " + yellowLetter.Key + " / " + yellowLetter.Value);
                         return false;
+                    }
+                }
+
+                // foreach (var darkgreyLetter in DarkgreyLetters)
+                // {
+                //     Console.WriteLine("dg: value/key: " + word[darkgreyLetter.Key] + " / " + darkgreyLetter.Key);
+                //     if (darkgreyLetter.Value.Contains(word[darkgreyLetter.Key]))
+                //     {
+                //         return false;
+                //     }
+                // }
+
+                /// this is really close
+                // foreach (var darkgreyLetter in DarkgreyLetters)
+                // {
+                //     // if (darkgreyLetter.Value.Contains(word[darkgreyLetter.Key]) && !GreenLetters.Values.Contains(word[darkgreyLetter.Key]))
+                //     // {
+                //     //     return false;
+                //     // }
+                //     foreach (var character in darkgreyLetter.Value)
+                //     {
+                //         // If the current character is in the word and not green in a different position, exclude the word
+                //         if (word.Contains(character) && !GreenLetters.Values.Contains(character))
+                //         {
+                //             return false;
+                //         }
+                //     }
+                // }
+
+                // foreach (var darkgreyLetter in DarkgreyLetters)
+                // {
+                //     foreach (var character in darkgreyLetter.Value)
+                //     {
+                //         // Check if the current character is in the word
+                //         if (word.Contains(character))
+                //         {
+                //             // Find all occurrences of the character in the word
+                //             var charIndexes = Enumerable.Range(0, word.Length).Where(i => word[i] == character).ToList();
+
+                //             // Check if all occurrences of the character are green
+                //             bool allOccurrencesGreen = charIndexes.All(i => GreenLetters.ContainsKey(i) && GreenLetters[i] == character);
+
+                //             // If not all occurrences are green, exclude the word
+                //             if (!allOccurrencesGreen)
+                //             {
+                //                 return false;
+                //             }
+                //         }
+                //     }
+                // }
+                foreach (var darkgreyLetter in DarkgreyLetters)
+                {
+                    foreach (var character in darkgreyLetter.Value)
+                    {
+                        // Check if the current character is in the word and not green in a different position
+                        if (word.Contains(character) && !GreenLetters.Values.Contains(character))
+                        {
+                            // Exclude the word if the character is found and not green elsewhere
+                            return false;
+                        }
                     }
                 }
 
                 foreach (var darkgreyLetter in DarkgreyLetters)
                 {
-                    if (word[darkgreyLetter.Key] == darkgreyLetter.Value)
-                    {
-                        if (word == "eerie") Console.WriteLine("DARKGREY: word / key / value: " + word + " / " + darkgreyLetter.Key + " / " + darkgreyLetter.Value);
+                    var position = darkgreyLetter.Key;
+                    var greyCharacters = darkgreyLetter.Value;
 
+                    // If there's a grey color character in the same position as the word being evaluated, exclude the word
+                    if (greyCharacters.Contains(word[position]))
+                    {
                         return false;
                     }
                 }
