@@ -21,7 +21,6 @@ body {
   margin-bottom: 60px;
 }
 
-
 .wordle-row {
   display: flex;
   margin-bottom: 5px;
@@ -30,17 +29,28 @@ body {
 }
 
 .letter-input {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
+  font-size: 24px;
   text-align: center;
   margin-right: 5px;
   margin-bottom: 5px;
   border: 1px solid #ccc;
+  text-transform: uppercase;
+}
+
+.submit-button {
+  display: block;
+  width: 50%;
+  margin: 10px auto;
+  font-size: 18px;
+  padding: 10px;
 }
 
 @media (max-width: 500px) {
   .letter-input {
       width: 48px;
       height: 48px;
+      font-size: 18px;
   }
 }
