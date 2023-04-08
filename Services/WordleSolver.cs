@@ -65,10 +65,10 @@ namespace WordleSolver.Services
                         return false;
                     }
 
-                    if (word[yellowLetter.Key] == yellowLetter.Value)
-                    {
-                        return false;
-                    }
+                    // if (word[yellowLetter.Key] == yellowLetter.Value)
+                    // {
+                    //     return false;
+                    // }
                 }
 
                 foreach (var darkgreyLetter in DarkgreyLetters)

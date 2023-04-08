@@ -5,7 +5,6 @@ using WordleSolver.Models;
 
 namespace WordleSolver.Pages
 {
-
     public class IndexModel : PageModel
     {
         private readonly WordDictionaryService _wordDictionaryService;
@@ -20,7 +19,7 @@ namespace WordleSolver.Pages
 
         public Dictionary<int, char> GreenLetters { get; set; }
         public Dictionary<int, char> YellowLetters { get; set; }
-        public List<char> DarkgreyLetters { get; set; }
+        public Dictionary<int, char> DarkgreyLetters { get; set; }
 
         public void OnPost()
         {
@@ -69,17 +68,13 @@ namespace WordleSolver.Pages
             // Create dictionaries to store the known green, yellow, and darkgrey letters with their positions
             GreenLetters = new Dictionary<int, char>();
             YellowLetters = new Dictionary<int, char>();
-            DarkgreyLetters = new List<char>();
+            DarkgreyLetters = new Dictionary<int, char>();
 
             // Iterate through the input words and populate the dictionaries
             for (int i = 0; i < words.Count; i++)
             {
-
-
                 for (int j = 0; j < words[i].Letters.Count; j++)
                 {
-
-
                     char character = words[i].Letters[j].Character;
                     string color = words[i].Letters[j].Color;
 
@@ -93,7 +88,7 @@ namespace WordleSolver.Pages
                     }
                     else if (color == "darkgrey")
                     {
-                        DarkgreyLetters.Add(character);
+                        DarkgreyLetters[j] = character;
                     }
                 }
             }
@@ -103,29 +98,45 @@ namespace WordleSolver.Pages
             {
                 foreach (var greenLetter in GreenLetters)
                 {
-                    if (word.Length <= greenLetter.Key || word[greenLetter.Key] != greenLetter.Value)
+                    // check to see if the character at the specified position in the word does not match the value; if so, exclude it
+                    if (word[greenLetter.Key] != greenLetter.Value)
                     {
+                        Console.WriteLine("GREEN: word / key / value: " + word + " / " + greenLetter.Key + " / " + greenLetter.Value);
                         return false;
                     }
                 }
 
                 foreach (var yellowLetter in YellowLetters)
                 {
+                    // check to see if the character is in the word; if not, exclude it
                     if (!word.Contains(yellowLetter.Value))
                     {
+                        Console.WriteLine("YELLOW 1: word / key / value: " + word + " / " + yellowLetter.Key + " / " + yellowLetter.Value);
                         return false;
                     }
 
+                    // check to see if this character is in this position; if so, exclude it
                     if (word[yellowLetter.Key] == yellowLetter.Value)
                     {
+                        Console.WriteLine("YELLOW 2: word / key / value: " + word + " / " + yellowLetter.Key + " / " + yellowLetter.Value);
                         return false;
                     }
                 }
 
+                // foreach (var darkgreyLetter in DarkgreyLetters)
+                // {
+                //     if (!GreenLetters.Values.Contains(darkgreyLetter.Value) && word.Contains(darkgreyLetter.Value))
+                //     {
+                //         return false;
+                //     }
+                // }
+
                 foreach (var darkgreyLetter in DarkgreyLetters)
                 {
-                    if (word.Contains(darkgreyLetter))
+                    if (word[darkgreyLetter.Key] == darkgreyLetter.Value)
                     {
+                        Console.WriteLine("DARKGREY: word / key / value: " + word + " / " + darkgreyLetter.Key + " / " + darkgreyLetter.Value);
+                        
                         return false;
                     }
                 }
@@ -164,10 +175,8 @@ namespace WordleSolver.Pages
                 return (double)sumFrequency / word.Length;
             }).ToList();
 
-
             // Return the top 10 most likely words
             return possibleWords.ToList();
         }
-
     }
 }
