@@ -20,3 +20,27 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+.wordle-row {
+  display: flex;
+  margin-bottom: 5px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.letter-input {
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border: 1px solid #ccc;
+}
+
+@media (max-width: 500px) {
+  .letter-input {
+      width: 48px;
+      height: 48px;
+  }
+}
