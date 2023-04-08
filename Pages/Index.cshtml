@@ -29,39 +29,39 @@
     @* <!-- Display Green Letters -->
     @if (Model.GreenLetters != null)
     {
-        <h2>Green Letters:</h2>
-        <ul>
-            @foreach (var greenLetter in Model.GreenLetters)
-            {
-                <li>Position: @greenLetter.Key, Letter: @greenLetter.Value</li>
-            }
-        </ul>
+    <h2>Green Letters:</h2>
+    <ul>
+    @foreach (var greenLetter in Model.GreenLetters)
+    {
+    <li>Position: @greenLetter.Key, Letter: @greenLetter.Value</li>
+    }
+    </ul>
     }
 
 
     <!-- Display Yellow Letters -->
     @if (Model.YellowLetters != null)
     {
-        <h2>Yellow Letters:</h2>
-        <ul>
-            @foreach (var yellowLetter in Model.YellowLetters)
-            {
-                <li>Position: @yellowLetter.Key, Letter: @yellowLetter.Value</li>
-            }
-        </ul>
+    <h2>Yellow Letters:</h2>
+    <ul>
+    @foreach (var yellowLetter in Model.YellowLetters)
+    {
+    <li>Position: @yellowLetter.Key, Letter: @yellowLetter.Value</li>
+    }
+    </ul>
 
     }
 
     <!-- Display Darkgrey Letters -->
     @if (Model.DarkgreyLetters != null)
     {
-        <h2>Darkgrey Letters:</h2>
-        <ul>
-            @foreach (var darkgreyLetter in Model.DarkgreyLetters)
-            {
-                <li>Position: @darkgreyLetter.Key, Letters: @string.Join(", ", darkgreyLetter.Value)</li>
-            }
-        </ul>
+    <h2>Darkgrey Letters:</h2>
+    <ul>
+    @foreach (var darkgreyLetter in Model.DarkgreyLetters)
+    {
+    <li>Position: @darkgreyLetter.Key, Letters: @string.Join(", ", darkgreyLetter.Value)</li>
+    }
+    </ul>
     } *@
 
     <!-- Add this section to display the top 10 likely words -->
@@ -71,7 +71,7 @@
         <ul>
             @foreach (var word in Model.Top10LikelyWords)
             {
-                <li>@word</li>
+                <li>@word.ToUpper()</li>
             }
         </ul>
     }
