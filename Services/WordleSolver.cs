@@ -84,7 +84,7 @@ namespace WordleSolver.Services
                 {
                     foreach (var character in darkgreyLetter.Value)
                     {
-                        // Check if the current character is in the word and not green in a different position
+                        // Check if the current character is in the word and not green or yellow in a different position
                         if (word.Contains(character) && !GreenLetters.Values.Contains(character) && !YellowLetters.Values.Contains(character))
                         {
                             // Exclude the word if the character is found and not green elsewhere
