@@ -9,7 +9,7 @@
 <div style="text-align: center;">
     <h1>Wordle Solver</h1>
 
-    <p>As you play Wordle, enter your guesses here, indicate the proper color, and click Submit to get the next best
+    <p>As you play Wordle, enter your guesses here, indicate the proper color by double-clicking, and click Submit to get the next best
         guess!</p>
 </div>
 
@@ -53,9 +53,9 @@
         // Get all the letter-input elements
         const letterInputs = document.querySelectorAll('.letter-input');
 
-        // Add a click event listener to each letter-input
+        // Add a dblclick event listener to each letter-input
         letterInputs.forEach(input => {
-            input.addEventListener('click', () => {
+            input.addEventListener('dblclick', () => {
 
                 if (input.style.backgroundColor === 'darkgrey') {
                     input.style.backgroundColor = 'green';
