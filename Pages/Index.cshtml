@@ -23,7 +23,8 @@
 
                 <input type="text" class="letter-input letter-input-no-select" maxlength="1" name="@($"word-{i}-letter-{j}")"
                     value="@(string.IsNullOrEmpty(inputValue) ? "" : inputValue)"
-                    style="background-color:@(string.IsNullOrEmpty(inputColor) ? "darkgrey" : inputColor)" />
+                    style="background-color:@(string.IsNullOrEmpty(inputColor) ? "darkgrey" : inputColor)" readonly />
+
                 <input type="hidden" name="@($"word-{i}-letter-{j}-color")" value="@(inputColor)" />
             }
             <button type="button" class="btn btn-grey delete-button" onclick="clearRow(@i)"><i
@@ -94,11 +95,11 @@
         // Get all the letter-input elements
         const letterInputs = document.querySelectorAll('.letter-input');
 
-        // Add a dblclick event listener to each letter-input
+        // Add a click event listener to each letter-input
         letterInputs.forEach(input => {
-            input.addEventListener('dblclick', () => {
+            input.addEventListener('click', () => {
 
-                event.preventDefault(); // Add this line to prevent the default behavior of the dblclick event
+                event.preventDefault(); // Add this line to prevent the default behavior of the click event
 
                 if (input.style.backgroundColor === 'darkgrey') {
                     input.style.backgroundColor = 'green';
@@ -131,7 +132,8 @@
             });
 
             // Set the input color to dark grey when it gets focus for the first time
-            input.addEventListener('focus', () => {
+            input.addEventListener('focus', (event) => {
+                event.preventDefault(); // Prevent focus event
                 if (!input.dataset.focused) {
                     input.style.backgroundColor = 'darkgrey';
                     input.nextElementSibling.value = input.style.backgroundColor;
