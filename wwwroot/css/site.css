@@ -78,3 +78,10 @@ body {
 .delete-button i {
   font-size: 1.2em;
 }
+
+.letter-input-no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

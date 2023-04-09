@@ -22,7 +22,7 @@
                 string inputValue = TempData[$"word-{i}-letter-{j}"]?.ToString().Trim();
                 string inputColor = TempData[$"word-{i}-letter-{j}-color"]?.ToString().Trim();
 
-                <input type="text" class="letter-input" maxlength="1" name="@($"word-{i}-letter-{j}")"
+                <input type="text" class="letter-input letter-input-no-select" maxlength="1" name="@($"word-{i}-letter-{j}")"
                     value="@(string.IsNullOrEmpty(inputValue) ? "" : inputValue)"
                     style="background-color:@(string.IsNullOrEmpty(inputColor) ? "darkgrey" : inputColor)" />
                 <input type="hidden" name="@($"word-{i}-letter-{j}-color")" value="@(inputColor)" />
