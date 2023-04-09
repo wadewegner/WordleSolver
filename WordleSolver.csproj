@@ -4,6 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <RuntimeIdentifier Condition="'$(PublishProfile)' == 'Heroku'">heroku-x64</RuntimeIdentifier>
   </PropertyGroup>
   <ItemGroup>
     <None Update="words.txt">
@@ -11,6 +12,5 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </None>
   </ItemGroup>
-  
 
 </Project>
