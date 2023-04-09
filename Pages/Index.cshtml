@@ -24,18 +24,23 @@
 
                 <input type="text" class="letter-input" maxlength="1" name="@($"word-{i}-letter-{j}")"
                     value="@(string.IsNullOrEmpty(inputValue) ? "" : inputValue)"
-                    style="background-color:@(string.IsNullOrEmpty(inputColor) ? "white" : inputColor)" />
+                    style="background-color:@(string.IsNullOrEmpty(inputColor) ? "darkgrey" : inputColor)" />
                 <input type="hidden" name="@($"word-{i}-letter-{j}-color")" value="@(inputColor)" />
             }
             <button type="button" class="btn btn-grey delete-button" onclick="clearRow(@i)"><i
                     class="fas fa-trash-alt"></i></button>
         </div>
     }
-    <button type="submit" class="btn btn-primary submit-button">Submit</button>
+    
+    <div class="button-container">
+        <button type="submit" class="btn btn-primary submit-button">Submit</button>
+        <button type="button" class="btn btn-danger clear-button" onclick="clearAll()">Clear All</button>
+    </div>
 
     <!-- Add this section to display the top 10 likely words -->
     @if (Model.Top10LikelyWords != null && Model.Top10LikelyWords.Count > 0)
-    {
+{
+    <div id="wordList">
         <h2>Most Likely Words:</h2>
         <ul>
             @foreach (var word in Model.Top10LikelyWords)
@@ -44,7 +49,8 @@
                     @word.ToUpper()</li>
             }
         </ul>
-    }
+    </div>
+}
 
 </form>
 
@@ -145,6 +151,22 @@
                 input.value = '';
                 input.style.backgroundColor = '';
                 input.nextElementSibling.value = '';
+            }
+        }
+
+        function clearAll() {
+            // Clear all input boxes
+            for (let i = 0; i < 30; i++) {
+                const input = letterInputs[i];
+                input.value = '';
+                input.style.backgroundColor = '';
+                input.nextElementSibling.value = '';
+            }
+
+            // Remove the list of potential words
+            const wordList = document.querySelector('#wordList');
+            if (wordList) {
+                wordList.remove();
             }
         }
 
