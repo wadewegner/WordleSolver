@@ -24,8 +24,7 @@ body {
 
 .wordle-row {
   display: flex;
-  margin-bottom: 5px;
-  flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
 }
 
@@ -55,4 +54,20 @@ body {
       height: 48px;
       font-size: 18px;
   }
+}
+
+.btn-grey {
+  background-color: darkgrey;
+  color: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.delete-button i {
+  font-size: 1.2em;
 }

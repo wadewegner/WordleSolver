@@ -58,9 +58,9 @@ namespace WordleSolver.Pages
             }
 
 
-            var wordleSover = new WordleSolver.Services.WordleSolver(_wordDictionaryService);
+            var suggestionEngine = new WordleSolver.Services.SuggestionEngine(_wordDictionaryService);
 
-            Top10LikelyWords = wordleSover.GetTop10LikelyWords(Words);
+            Top10LikelyWords = suggestionEngine.GetTop10LikelyWords(Words);
         }
     }
 }

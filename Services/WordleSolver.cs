@@ -2,14 +2,14 @@ using WordleSolver.Models;
 
 namespace WordleSolver.Services
 {
-    public class WordleSolver
+    public class SuggestionEngine
     {
         private IDictionary<int, char> GreenLetters;
         private IDictionary<int, char> YellowLetters;
         private Dictionary<int, List<char>> DarkgreyLetters;
         private WordDictionaryService _wordDictionaryService;
 
-        public WordleSolver(WordDictionaryService wordDictionaryService)
+        public SuggestionEngine(WordDictionaryService wordDictionaryService)
         {
             _wordDictionaryService = wordDictionaryService;
         }
