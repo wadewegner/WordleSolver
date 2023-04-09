@@ -165,8 +165,8 @@
             for (let i = 0; i < 5; i++) {
                 const input = letterInputs[rowIndex * 5 + i];
                 input.value = '';
-                input.style.backgroundColor = '';
-                input.nextElementSibling.value = '';
+                input.style.backgroundColor = 'darkgrey';
+                input.nextElementSibling.value = input.style.backgroundColor;
             }
         }
 
@@ -175,8 +175,8 @@
             for (let i = 0; i < 30; i++) {
                 const input = letterInputs[i];
                 input.value = '';
-                input.style.backgroundColor = '';
-                input.nextElementSibling.value = '';
+                input.style.backgroundColor = 'darkgrey';
+                input.nextElementSibling.value = input.style.backgroundColor;
             }
 
             // Remove the list of potential words
