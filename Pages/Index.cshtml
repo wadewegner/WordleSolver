@@ -34,37 +34,37 @@
     
    <div id="keyboard-cont">
         <div class="first-row">
-            <button class="keyboard-button" type="button">q</button>
-            <button class="keyboard-button" type="button">w</button>
-            <button class="keyboard-button" type="button">e</button>
-            <button class="keyboard-button" type="button">r</button>
-            <button class="keyboard-button" type="button">t</button>
-            <button class="keyboard-button" type="button">y</button>
-            <button class="keyboard-button" type="button">u</button>
-            <button class="keyboard-button" type="button">i</button>
-            <button class="keyboard-button" type="button">o</button>
-            <button class="keyboard-button" type="button">p</button>
+            <button class="btn keyboard-button" type="button">q</button>
+            <button class="btn keyboard-button" type="button">w</button>
+            <button class="btn keyboard-button" type="button">e</button>
+            <button class="btn keyboard-button" type="button">r</button>
+            <button class="btn keyboard-button" type="button">t</button>
+            <button class="btn keyboard-button" type="button">y</button>
+            <button class="btn keyboard-button" type="button">u</button>
+            <button class="btn keyboard-button" type="button">i</button>
+            <button class="btn keyboard-button" type="button">o</button>
+            <button class="btn keyboard-button" type="button">p</button>
         </div>
         <div class="second-row">
-            <button class="keyboard-button" type="button">a</button>
-            <button class="keyboard-button" type="button">s</button>
-            <button class="keyboard-button" type="button">d</button>
-            <button class="keyboard-button" type="button">f</button>
-            <button class="keyboard-button" type="button">g</button>
-            <button class="keyboard-button" type="button">h</button>
-            <button class="keyboard-button" type="button">j</button>
-            <button class="keyboard-button" type="button">k</button>
-            <button class="keyboard-button" type="button">l</button>
+            <button class="btn keyboard-button" type="button">a</button>
+            <button class="btn keyboard-button" type="button">s</button>
+            <button class="btn keyboard-button" type="button">d</button>
+            <button class="btn keyboard-button" type="button">f</button>
+            <button class="btn keyboard-button" type="button">g</button>
+            <button class="btn keyboard-button" type="button">h</button>
+            <button class="btn keyboard-button" type="button">j</button>
+            <button class="btn keyboard-button" type="button">k</button>
+            <button class="btn keyboard-button" type="button">l</button>
         </div>
         <div class="third-row">
             <button type="submit" class="btn btn-primary submit-button">Enter</button>
-            <button class="keyboard-button" type="button">z</button>
-            <button class="keyboard-button" type="button">x</button>
-            <button class="keyboard-button" type="button">c</button>
-            <button class="keyboard-button" type="button">v</button>
-            <button class="keyboard-button" type="button">b</button>
-            <button class="keyboard-button" type="button">n</button>
-            <button class="keyboard-button" type="button">m</button>
+            <button class="btn keyboard-button" type="button">z</button>
+            <button class="btn keyboard-button" type="button">x</button>
+            <button class="btn keyboard-button" type="button">c</button>
+            <button class="btn keyboard-button" type="button">v</button>
+            <button class="btn keyboard-button" type="button">b</button>
+            <button class="btn keyboard-button" type="button">n</button>
+            <button class="btn keyboard-button" type="button">m</button>
             <button type="button" class="btn btn-danger clear-button" onclick="clearAll()">Clear</button>
         </div>
     </div>
@@ -73,11 +73,11 @@
     @if (Model.Top10LikelyWords != null && Model.Top10LikelyWords.Count > 0)
 {
     <div id="wordList">
-        <h2>Most Likely Words:</h2>
+        <h2>Most Likely Words (Click to Add):</h2>
         <ul>
             @foreach (var word in Model.Top10LikelyWords)
             {
-                <li style="cursor:pointer; text-decoration: underline; color: blue;" onclick="insertWord('@word.ToUpper()')">
+                <li style="cursor:pointer; text-decoration: underline; color: #212529;" onclick="insertWord('@word.ToUpper()')">
                     @word.ToUpper()</li>
             }
         </ul>
