@@ -42,7 +42,7 @@ namespace WordleSolver.Tests
             // convert the word details to a list of words
             var words = EngineHelper.ConstructWords(wordDetails);
             // get the most likely words
-            var result = suggestionEngine.GetTop10LikelyWords(words);
+            var result = suggestionEngine.GetMostLikelyWords(words);
 
             // check if the result is not null nor empty
             result.Should().NotBeNull();

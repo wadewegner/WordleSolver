@@ -60,7 +60,7 @@ namespace WordleSolver.Pages
 
             var suggestionEngine = new WordleSolver.Services.SuggestionEngine(_wordDictionaryService);
 
-            Top10LikelyWords = suggestionEngine.GetTop10LikelyWords(Words);
+            Top10LikelyWords = suggestionEngine.GetMostLikelyWords(Words);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace WordleSolver.Services
             _wordDictionaryService = wordDictionaryService;
         }
 
-        public List<string> GetTop10LikelyWords(List<Word> words)
+        public List<string> GetMostLikelyWords(List<Word> words)
         {
             // Retrieve the list of possible words from the dictionary service
             var possibleWords = _wordDictionaryService.WordsHashSet.ToList();
