@@ -24,7 +24,7 @@
 
                 <input type="text" class="letter-input" maxlength="1" name="@($"word-{i}-letter-{j}")"
                     value="@(string.IsNullOrEmpty(inputValue) ? "" : inputValue)"
-                    style="@(string.IsNullOrEmpty(inputColor) ? "" : $"background-color:{inputColor}")" />
+                    style="background-color:@(string.IsNullOrEmpty(inputColor) ? "darkgrey" : inputColor)" />
                 <input type="hidden" name="@($"word-{i}-letter-{j}-color")" value="@(inputColor)" />
             }
             <button type="button" class="btn btn-grey delete-button" onclick="clearRow(@i)"><i
