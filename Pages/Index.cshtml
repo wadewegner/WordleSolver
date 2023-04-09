@@ -24,7 +24,7 @@
 
                 <input type="text" class="letter-input" maxlength="1" name="@($"word-{i}-letter-{j}")"
                     value="@(string.IsNullOrEmpty(inputValue) ? "" : inputValue)"
-                    style="background-color:@(string.IsNullOrEmpty(inputColor) ? "darkgrey" : inputColor)" />
+                    style="background-color:@(string.IsNullOrEmpty(inputColor) ? "white" : inputColor)" />
                 <input type="hidden" name="@($"word-{i}-letter-{j}-color")" value="@(inputColor)" />
             }
             <button type="button" class="btn btn-grey delete-button" onclick="clearRow(@i)"><i
@@ -68,6 +68,14 @@
                 // Update the corresponding hidden input with the color value
                 input.nextElementSibling.value = input.style.backgroundColor;
             });
+
+            // Disable text selection, copy, cut, and paste
+            input.addEventListener('selectstart', (event) => {
+                event.preventDefault();
+            });
+            input.setAttribute('oncopy', 'return false;');
+            input.setAttribute('oncut', 'return false;');
+            input.setAttribute('onpaste', 'return false;');
         });
 
         // Add an input event listener to each letter-input
