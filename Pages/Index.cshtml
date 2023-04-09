@@ -63,6 +63,8 @@
         letterInputs.forEach(input => {
             input.addEventListener('dblclick', () => {
 
+                event.preventDefault(); // Add this line to prevent the default behavior of the dblclick event
+
                 if (input.style.backgroundColor === 'darkgrey') {
                     input.style.backgroundColor = 'green';
                 } else if (input.style.backgroundColor === 'green') {
@@ -82,6 +84,20 @@
             input.setAttribute('oncopy', 'return false;');
             input.setAttribute('oncut', 'return false;');
             input.setAttribute('onpaste', 'return false;');
+
+              // Disable text selection, copy, cut, and paste
+            input.addEventListener('selectstart', (event) => {
+                event.preventDefault();
+            });
+            input.addEventListener('copy', (event) => {
+                event.preventDefault();
+            });
+            input.addEventListener('cut', (event) => {
+                event.preventDefault();
+            });
+            input.addEventListener('paste', (event) => {
+                event.preventDefault();
+            });
         });
 
         // Add an input event listener to each letter-input
