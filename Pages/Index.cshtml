@@ -37,6 +37,42 @@
         <button type="button" class="btn btn-danger clear-button" onclick="clearAll()">Clear All</button>
     </div>
 
+
+   <div id="keyboard-cont">
+        <div class="first-row">
+            <button class="keyboard-button" type="button">q</button>
+            <button class="keyboard-button" type="button">w</button>
+            <button class="keyboard-button" type="button">e</button>
+            <button class="keyboard-button" type="button">r</button>
+            <button class="keyboard-button" type="button">t</button>
+            <button class="keyboard-button" type="button">y</button>
+            <button class="keyboard-button" type="button">u</button>
+            <button class="keyboard-button" type="button">i</button>
+            <button class="keyboard-button" type="button">o</button>
+            <button class="keyboard-button" type="button">p</button>
+        </div>
+        <div class="second-row">
+            <button class="keyboard-button" type="button">a</button>
+            <button class="keyboard-button" type="button">s</button>
+            <button class="keyboard-button" type="button">d</button>
+            <button class="keyboard-button" type="button">f</button>
+            <button class="keyboard-button" type="button">g</button>
+            <button class="keyboard-button" type="button">h</button>
+            <button class="keyboard-button" type="button">j</button>
+            <button class="keyboard-button" type="button">k</button>
+            <button class="keyboard-button" type="button">l</button>
+        </div>
+        <div class="third-row">
+            <button class="keyboard-button" type="button">z</button>
+            <button class="keyboard-button" type="button">x</button>
+            <button class="keyboard-button" type="button">c</button>
+            <button class="keyboard-button" type="button">v</button>
+            <button class="keyboard-button" type="button">b</button>
+            <button class="keyboard-button" type="button">n</button>
+            <button class="keyboard-button" type="button">m</button>
+        </div>
+    </div>
+
     <!-- Add this section to display the top 10 likely words -->
     @if (Model.Top10LikelyWords != null && Model.Top10LikelyWords.Count > 0)
 {
@@ -84,20 +120,6 @@
             input.setAttribute('oncopy', 'return false;');
             input.setAttribute('oncut', 'return false;');
             input.setAttribute('onpaste', 'return false;');
-
-              // Disable text selection, copy, cut, and paste
-            input.addEventListener('selectstart', (event) => {
-                event.preventDefault();
-            });
-            input.addEventListener('copy', (event) => {
-                event.preventDefault();
-            });
-            input.addEventListener('cut', (event) => {
-                event.preventDefault();
-            });
-            input.addEventListener('paste', (event) => {
-                event.preventDefault();
-            });
         });
 
         // Add an input event listener to each letter-input
@@ -115,6 +137,61 @@
                     input.style.backgroundColor = 'darkgrey';
                     input.nextElementSibling.value = input.style.backgroundColor;
                     input.dataset.focused = 'true';
+                }
+            });
+        });
+
+        document.addEventListener("keyup", (e) => {
+
+            let pressedKey = String(e.key)
+
+            let found = pressedKey.match(/[a-z]/gi)
+            if (!found || found.length > 1) {
+                return
+            } else {
+                insertLetter(pressedKey)
+            }
+        })
+
+        function insertLetter(pressedKey) {
+            // Find the next empty input box
+            let nextEmptyInput = null;
+            for (let i = 0; i < letterInputs.length; i++) {
+                if (letterInputs[i].value === '') {
+                    nextEmptyInput = letterInputs[i];
+                    break;
+                }
+            }
+
+            if (nextEmptyInput) {
+                nextEmptyInput.value = pressedKey.toUpperCase();
+                if (nextEmptyInput.nextElementSibling) {
+                    nextEmptyInput.nextElementSibling.focus();
+                }
+            }
+        }
+
+        function deleteLetter() {
+            // Find the last non-empty input box
+            let lastNonEmptyInput = null;
+            for (let i = 0; i < letterInputs.length; i++) {
+                if (letterInputs[i].value !== '') {
+                    lastNonEmptyInput = letterInputs[i];
+                }
+            }
+
+            if (lastNonEmptyInput) {
+                lastNonEmptyInput.value = '';
+                lastNonEmptyInput.focus();
+            }
+        }
+
+        const keyboardButtons = document.querySelectorAll('.keyboard-button');
+        keyboardButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                let pressedKey = button.textContent;
+                if (pressedKey.match(/[a-z]/i)) {
+                    insertLetter(pressedKey);
                 }
             });
         });
