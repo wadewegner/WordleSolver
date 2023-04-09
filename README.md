@@ -2,7 +2,7 @@
 
 Wordle Solver is an ASP.NET Blazor application that helps players solve the popular Wordle game by providing the most likely words based on the user's previous guesses and their corresponding color indications.
 
-![Wordle Solver Screenshot](./screenshot.jpg)
+<img src="./screenshot.jpg" width="300">
 
 ## Features
 
