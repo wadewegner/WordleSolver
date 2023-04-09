@@ -30,6 +30,24 @@
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach"
+        },
+        {
+            "name": "Debug xunit tests",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "dotnet",
+            "args": [
+                "exec",
+                "--runtimeconfig",
+                "${workspaceRoot}/WordleSolver/bin/Debug/net7.0/WordleSolver.runtimeconfig.json",
+                "--depsfile",
+                "${workspaceRoot}/WordleSolver/bin/Debug/net7.0.0/WordleSolver.deps.json",
+                "-namespace",
+                "WordleSolver.Tests"
+              ],
+            "cwd": "${workspaceRoot}",
+            "stopAtEntry": false
         }
     ]
 }
