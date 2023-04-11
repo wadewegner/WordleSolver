@@ -27,7 +27,7 @@ namespace WordleSolver.Tests
         }
 
         [Fact]
-        public void GetTop10LikelyWords_ShouldReturnCorrectResults_WhenProvidedWithGreenAndYellowLetters()
+        public void GetMostLikelyWords_ShouldReturnCorrectResults_Collection1()
         {
             var suggestionEngine = new SuggestionEngine(_wordDictionaryService);
 
@@ -37,6 +37,32 @@ namespace WordleSolver.Tests
                 ("dealt", "ddddg"),
                 ("stott", "ddydg"),
                 ("torot", "dgddg")
+            };
+
+            // convert the word details to a list of words
+            var words = EngineHelper.ConstructWords(wordDetails);
+            // get the most likely words
+            var result = suggestionEngine.GetMostLikelyWords(words);
+
+            // check if the result is not null nor empty
+            result.Should().NotBeNull();
+            result.Should().NotBeEmpty();
+
+            // check that the result does not contain the word "torot"
+            result.Should().NotContain("TOROT");
+        }
+
+        [Fact]
+        public void GetMostLikelyWords_ShouldReturnCorrectResults_Collection2()
+        {
+            var suggestionEngine = new SuggestionEngine(_wordDictionaryService);
+
+            // construct the words with the correct colors
+            var wordDetails = new[]
+            {
+                ("soare", "dddyy"),
+                ("dreer", "yddgg"),
+                ("eider", "ddggg")
             };
 
             // convert the word details to a list of words

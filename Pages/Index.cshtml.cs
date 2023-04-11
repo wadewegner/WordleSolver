@@ -15,7 +15,7 @@ namespace WordleSolver.Pages
 
         [BindProperty]
         public List<Word> Words { get; set; } = new List<Word>();
-        public List<string> Top10LikelyWords { get; set; }
+        public List<string> MostLikelyWords { get; set; }
 
         public Dictionary<int, char> GreenLetters { get; set; }
         public Dictionary<int, char> YellowLetters { get; set; }
@@ -37,6 +37,11 @@ namespace WordleSolver.Pages
                     char letterChar = !string.IsNullOrEmpty(inputValue) ? inputValue[0] : ' ';
                     string letterColor = Request.Form[$"word-{i}-letter-{j}-color"].ToString().Trim();
 
+                    if (string.IsNullOrEmpty(letterColor))
+                    {
+                        letterColor = "lightgrey";
+                    }
+
                     // Save the input values and colors to TempData
                     TempData[$"word-{i}-letter-{j}"] = letterChar;
                     TempData[$"word-{i}-letter-{j}-color"] = letterColor;
@@ -50,17 +55,10 @@ namespace WordleSolver.Pages
                     Words.Add(word);
                 }
             }
-
-            foreach (Word word in Words)
-            {
-                string wordString = new string(word.Letters.Select(l => l.Character).ToArray());
-                bool wordExists = _wordDictionaryService.WordsHashSet.Contains(wordString);
-            }
-
-
+ 
             var suggestionEngine = new WordleSolver.Services.SuggestionEngine(_wordDictionaryService);
 
-            Top10LikelyWords = suggestionEngine.GetMostLikelyWords(Words);
+            MostLikelyWords = suggestionEngine.GetMostLikelyWords(Words);
         }
     }
 }
