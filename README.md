@@ -1,6 +1,6 @@
-# Wordle Solver
+# Wordle Wizard
 
-Wordle Solver is an ASP.NET Blazor application that helps players solve the popular Wordle game by providing the most likely words based on the user's previous guesses and their corresponding color indications.
+Wordle Wizard is an ASP.NET Blazor application that helps players solve the popular Wordle game by providing the most likely words based on the user's previous guesses and their corresponding color indications.
 
 [Try it right now!](https://wordlesolver.herokuapp.com/)
 
@@ -47,13 +47,13 @@ dotnet build
 dotnet run
 ```
 
-6. Open your browser and navigate to `http://localhost:<PORT>` to start using the Wordle Solver.
+6. Open your browser and navigate to `http://localhost:<PORT>` to start using the Wordle Wizard.
 
 ## Usage
 
 1. Start a new game of Wordle (either on the official website or any other platform that offers the game).
 
-2. Input your Wordle guesses in the Wordle Solver app, indicating their color by double-clicking the letter (green, yellow, or dark grey).
+2. Input your Wordle guesses in the Wordle Wizard app, indicating their color by double-clicking the letter (green, yellow, or dark grey).
 
 3. Click the `Submit` button to get the next best guess based on your input history.
 
