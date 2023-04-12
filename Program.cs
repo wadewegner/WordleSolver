@@ -17,6 +17,20 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.Use(async (context, next) =>
+{
+    var host = context.Request.Host.Host;
+    if (host.Contains("herokuapp.com"))
+    {
+        var withDomain = "https://www.wordlewizard.com" + context.Request.Path + context.Request.QueryString;
+        context.Response.Redirect(withDomain, permanent: true);
+    }
+    else
+    {
+        await next();
+    }
+});
+
 app.UseRouting();
 
 app.UseAuthorization();
