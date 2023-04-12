@@ -20,7 +20,7 @@ html {
 
 body {
   margin-bottom: 60px;
-  
+  /* background-color: #F1E8F5; */
 }
 
 .wordle-row {
@@ -129,3 +129,16 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+/* 
+.navbar .navbar-nav .nav-link {
+  color: #710083;
+}
+
+.navbar .navbar-brand {
+  color: #710083;
+}
+
+.custom-h1 {
+  color: #710083;
+} */

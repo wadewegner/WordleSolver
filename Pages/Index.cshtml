@@ -7,9 +7,11 @@
 <link rel="stylesheet" href="../styles.css" />
 
 <div style="text-align: center;">
-    <h1>Wordle Wizard</h1>
 
-    <p>Boost your Wordle prowess with the Wordle Wizard! Solve puzzles effortlessly while still enjoying the challenge of choosing the next best word.</p>
+    <h1 class="custom-h1">Wordle Wizard</h1>
+
+    <p>Boost your Wordle prowess with the Wordle Wizard! Solve puzzles effortlessly while still enjoying the challenge
+        of choosing the next best word.</p>
 </div>
 
 <form method="post" id="wordleForm" onsubmit="return validateForm();">
@@ -25,14 +27,15 @@
                     value="@(string.IsNullOrEmpty(inputValue) ? "" : inputValue)"
                     style="background-color:@(string.IsNullOrEmpty(inputColor) ? "darkgrey" : inputColor)" readonly />
 
-                <input type="hidden" name="@($"word-{i}-letter-{j}-color")" value="@(string.IsNullOrEmpty(inputColor) ? "darkgrey" : inputColor)" />
+                <input type="hidden" name="@($"word-{i}-letter-{j}-color")"
+                    value="@(string.IsNullOrEmpty(inputColor) ? "darkgrey" : inputColor)" />
             }
             <button type="button" class="btn btn-grey delete-button" onclick="clearRow(@i)"><i
                     class="fas fa-trash-alt"></i></button>
         </div>
     }
-    
-   <div id="keyboard-cont">
+
+    <div id="keyboard-cont">
         <div class="first-row">
             <button class="btn keyboard-button" type="button">q</button>
             <button class="btn keyboard-button" type="button">w</button>
@@ -71,18 +74,19 @@
 
     <!-- Add this section to display the top 10 likely words -->
     @if (Model.MostLikelyWords != null && Model.MostLikelyWords.Count > 0)
-{
-    <div id="wordList">
-        <h2>Most Likely Words (Click to Add):</h2>
-        <ul>
-            @foreach (var word in Model.MostLikelyWords)
-            {
-                <li style="cursor:pointer; text-decoration: underline; color: #212529;" onclick="insertWord('@word.ToUpper()')">
-                    @word.ToUpper()</li>
-            }
-        </ul>
-    </div>
-}
+    {
+        <div id="wordList">
+            <h2>Most Likely Words (Click to Add):</h2>
+            <ul>
+                @foreach (var word in Model.MostLikelyWords)
+                {
+                    <li style="cursor:pointer; text-decoration: underline; color: #212529;"
+                        onclick="insertWord('@word.ToUpper()')">
+                        @word.ToUpper()</li>
+                }
+            </ul>
+        </div>
+    }
 
 </form>
 
