@@ -27,7 +27,7 @@
 <body>
 
     <div id="loadingOverlay" class="loading-overlay">
-        <img src="wizard.png" alt="Wizard" width="25%" >
+        <img src="wizard.png" alt="Wizard" width="25%">
     </div>
 
     <header>
@@ -70,15 +70,36 @@
     @await RenderSectionAsync("Scripts", required: false)
 
     <script>
+        // Check if the overlay should be displayed
+        function shouldDisplayOverlay() {
+            const lastVisitKey = 'lastVisitTimestamp';
+            const lastVisit = localStorage.getItem(lastVisitKey);
+            const currentTime = new Date().getTime();
+            const oneHour = 60 * 60 * 1000;
+
+            if (!lastVisit || currentTime - parseInt(lastVisit) >= oneHour) {
+                localStorage.setItem(lastVisitKey, currentTime);
+                return true;
+            } else {
+                return false;
+            }
+        }
+
         document.onreadystatechange = function () {
             if (document.readyState === 'complete') {
-                setTimeout(function () {
-                    const loadingOverlay = document.getElementById('loadingOverlay');
-                    loadingOverlay.style.opacity = 0;
+                const loadingOverlay = document.getElementById('loadingOverlay');
+
+                if (shouldDisplayOverlay()) {
+                    loadingOverlay.style.display = 'flex'; // Show the loading overlay
                     setTimeout(function () {
-                        loadingOverlay.style.display = 'none';
+                        loadingOverlay.style.opacity = 0;
+                        setTimeout(function () {
+                            loadingOverlay.style.display = 'none';
+                        }, 1000);
                     }, 1000);
-                }, 1000);
+                } else {
+                    loadingOverlay.style.display = 'none';
+                }
             }
         };
     </script>
