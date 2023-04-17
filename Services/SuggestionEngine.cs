@@ -5,7 +5,7 @@ namespace WordleSolver.Services
     public class SuggestionEngine
     {
         private IDictionary<int, char> GreenLetters;
-        private IDictionary<int, char> YellowLetters;
+        private Dictionary<int, List<char>> YellowLetters;
         private Dictionary<int, List<char>> DarkgreyLetters;
         private WordDictionaryService _wordDictionaryService;
 
@@ -21,7 +21,7 @@ namespace WordleSolver.Services
 
             // Create dictionaries to store the known green, yellow, and darkgrey letters with their positions
             GreenLetters = new Dictionary<int, char>();
-            YellowLetters = new Dictionary<int, char>();
+            YellowLetters = new Dictionary<int, List<char>>();
             DarkgreyLetters = new Dictionary<int, List<char>>(); // Updated to store a list of characters
 
             // Iterate through the input words and populate the dictionaries
@@ -38,7 +38,11 @@ namespace WordleSolver.Services
                     }
                     else if (color == "yellow")
                     {
-                        YellowLetters[j] = character;
+                        if (!YellowLetters.ContainsKey(j))
+                        {
+                            YellowLetters[j] = new List<char>();
+                        }
+                        YellowLetters[j].Add(character);
                     }
                     else if (color == "darkgrey")
                     {
@@ -67,16 +71,23 @@ namespace WordleSolver.Services
 
                 foreach (var yellowLetter in YellowLetters)
                 {
-                    // check to see if the character is in the word; if not, exclude it
-                    if (!word.Contains(yellowLetter.Value))
+                    int position = yellowLetter.Key;
+                    var yellowLettersAtPosition = yellowLetter.Value;
+
+                    // Check if any of the yellow letters are at the current position; if so, exclude the word
+                    if (yellowLettersAtPosition.Contains(word[position]))
                     {
                         return false;
                     }
 
-                    // check to see if this character is in this position; if so, exclude it
-                    if (word[yellowLetter.Key] == yellowLetter.Value)
+                    // Check if all the yellow letters are found in the word, excluding the current position
+                    foreach (var character in yellowLettersAtPosition)
                     {
-                        return false;
+                        int indexInWord = word.IndexOf(character);
+                        if (indexInWord == -1 || indexInWord == position)
+                        {
+                            return false;
+                        }
                     }
                 }
 
@@ -85,10 +96,23 @@ namespace WordleSolver.Services
                     foreach (var character in darkgreyLetter.Value)
                     {
                         // Check if the current character is in the word and not green or yellow in a different position
-                        if (word.Contains(character) && !GreenLetters.Values.Contains(character) && !YellowLetters.Values.Contains(character))
+                        if (word.Contains(character) && !GreenLetters.Values.Contains(character))
                         {
-                            // Exclude the word if the character is found and not green elsewhere
-                            return false;
+                            bool isYellowCharacter = false;
+                            foreach (var yellowLetter in YellowLetters)
+                            {
+                                if (yellowLetter.Value.Contains(character) && word.IndexOf(character) != yellowLetter.Key)
+                                {
+                                    isYellowCharacter = true;
+                                    break;
+                                }
+                            }
+
+                            if (!isYellowCharacter)
+                            {
+                                // Exclude the word if the character is found and not green or yellow elsewhere
+                                return false;
+                            }
                         }
                     }
                 }
